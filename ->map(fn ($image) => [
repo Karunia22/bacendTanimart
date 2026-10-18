@@ -1,0 +1,34 @@
+[90m= [39m[34;4mApp\Models\Product[39;24m {#8225
+    [34mid[39m: [35m2[39m,
+    [34mseller_id[39m: [35m2[39m,
+    [34mnama_produk[39m: [32m"[39m[32mKopi Arabika Toraja[39m[32m"[39m,
+    [34mdeskripsi[39m: [32m"[39m[32mKopi arabika kemasan 250 gram.[39m[32m"[39m,
+    [34mharga[39m: [32m"[39m[32m90000.00[39m[32m"[39m,
+    [34mstok[39m: [35m2[39m,
+    [34mberat[39m: [35m250[39m,
+    [34mstatus[39m: [32m"[39m[32maktif[39m[32m"[39m,
+    [34mcreated_at[39m: [32m"[39m[32m2026-09-30 11:59:10[39m[32m"[39m,
+    [34mupdated_at[39m: [32m"[39m[32m2026-10-15 15:16:19[39m[32m"[39m,
+    [34mimages[39m: [34;4mIlluminate\Database\Eloquent\Collection[39;24m {#8666
+      [34mall[39m: [
+        [34;4mApp\Models\ProductImage[39;24m {#8669
+          [34mid[39m: [35m2[39m,
+          [34mproduct_id[39m: [35m2[39m,
+          [34mimage[39m: [32m"[39m[32mproducts/MpnrnwGKKzKCEO85W6nzBce1VOQb5DMh8OETxeQq.jpg[39m[32m"[39m,
+          [34mis_primary[39m: [35m0[39m,
+          [34mcreated_at[39m: [32m"[39m[32m2026-09-30 13:46:41[39m[32m"[39m,
+          [34mupdated_at[39m: [32m"[39m[32m2026-09-30 13:48:15[39m[32m"[39m,
+          +[1murl[22m: [32m"[39m[32mhttp://localhost:8000/storage/products/MpnrnwGKKzKCEO85W6nzBce1VOQb5DMh8OETxeQq.jpg[39m[32m"[39m,
+        },
+        [34;4mApp\Models\ProductImage[39;24m {#8668
+          [34mid[39m: [35m3[39m,
+          [34mproduct_id[39m: [35m2[39m,
+          [34mimage[39m: [32m"[39m[32mproducts/ibGf2pVFfandVY9rmC3ueQFTY2guMTt6bO6hijlj.jpg[39m[32m"[39m,
+          [34mis_primary[39m: [35m1[39m,
+          [34mcreated_at[39m: [32m"[39m[32m2026-09-30 13:47:32[39m[32m"[39m,
+          [34mupdated_at[39m: [32m"[39m[32m2026-09-30 13:48:15[39m[32m"[39m,
+          +[1murl[22m: [32m"[39m[32mhttp://localhost:8000/storage/products/ibGf2pVFfandVY9rmC3ueQFTY2guMTt6bO6hijlj.jpg[39m[32m"[39m,
+        },
+      ],
+    },
+  }
