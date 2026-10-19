@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,11 +25,18 @@ class AuthController extends Controller
             'status' => 'aktif',
         ]);
 
+        // Tautkan role customer pada pivot user_roles.
+        $customerRole = Role::where('name', 'customer')->first();
+
+        if ($customerRole && ! $user->hasRole('customer')) {
+            $user->roles()->attach($customerRole->id);
+        }
+
         $token = $user->createToken('android')->plainTextToken;
 
         return response()->json([
             'message' => 'Registrasi berhasil',
-            'user' => $user,
+            'user' => $this->userWithRoles($user),
             'token' => $token,
         ], 201);
     }
@@ -58,7 +66,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login berhasil',
-            'user' => $user,
+            'user' => $this->userWithRoles($user),
             'token' => $token,
         ]);
     }
@@ -69,6 +77,16 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Logout berhasil',
+        ]);
+    }
+
+    /**
+     * Data user beserta array nama role.
+     */
+    private function userWithRoles(User $user): array
+    {
+        return array_merge($user->toArray(), [
+            'roles' => $user->roleNames(),
         ]);
     }
 }

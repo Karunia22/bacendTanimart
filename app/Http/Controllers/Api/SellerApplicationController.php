@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
 use App\Models\SellerApplication;
-use App\Models\Shop;
+use App\Services\SellerApplicationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class SellerApplicationController extends Controller
@@ -104,7 +101,8 @@ class SellerApplicationController extends Controller
      */
     public function approve(
         Request $request,
-        SellerApplication $sellerApplication
+        SellerApplication $sellerApplication,
+        SellerApplicationService $service
     ): JsonResponse {
         if (! $request->user()->hasRole('admin')) {
             return response()->json([
@@ -112,68 +110,13 @@ class SellerApplicationController extends Controller
             ], 403);
         }
 
-        $shop = DB::transaction(function () use (
-            $request,
-            $sellerApplication
-        ) {
-            $application = SellerApplication::query()
-                ->lockForUpdate()
-                ->findOrFail($sellerApplication->id);
-
-            if ($application->status_pengajuan !== 'pending') {
-                abort(422, 'Pengajuan ini sudah ditinjau.');
-            }
-
-            $user = $application->user;
-
-            if ($user->shop()->exists()) {
-                abort(422, 'Pengguna ini sudah memiliki toko.');
-            }
-
-            // Membuat slug toko yang unik.
-            $baseSlug = Str::slug($application->nama_toko);
-
-            if ($baseSlug === '') {
-                $baseSlug = 'toko';
-            }
-
-            $slug = $baseSlug;
-            $suffix = 2;
-
-            while (Shop::where('slug', $slug)->exists()) {
-                $slug = $baseSlug . '-' . $suffix;
-                $suffix++;
-            }
-
-            // Membuat toko.
-            $shop = Shop::create([
-                'user_id' => $user->id,
-                'nama_toko' => $application->nama_toko,
-                'slug' => $slug,
-                'deskripsi' => $application->deskripsi_toko,
-                'alamat_usaha' => $application->alamat_usaha,
-                'no_telepon' => $application->no_telepon,
-                'status' => 'aktif',
-            ]);
-
-            // Memperbarui status pengajuan.
-            $application->update([
-                'status_pengajuan' => 'approved',
-                'reviewed_by' => $request->user()->id,
-                'reviewed_at' => now(),
-                'catatan_admin' => null,
-            ]);
-
-            // Menambahkan role seller tanpa menghapus role customer.
-            $sellerRole = Role::where('name', 'seller')
-                ->firstOrFail();
-
-            if (! $user->hasRole('seller')) {
-                $user->roles()->attach($sellerRole->id);
-            }
-
-            return $shop;
-        });
+        try {
+            $shop = $service->approve($sellerApplication, $request->user()->id);
+        } catch (\RuntimeException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 422);
+        }
 
         return response()->json([
             'message' => 'Pengajuan disetujui dan toko berhasil dibuat.',
@@ -186,7 +129,8 @@ class SellerApplicationController extends Controller
      */
     public function reject(
         Request $request,
-        SellerApplication $sellerApplication
+        SellerApplication $sellerApplication,
+        SellerApplicationService $service
     ): JsonResponse {
         if (! $request->user()->hasRole('admin')) {
             return response()->json([
@@ -198,32 +142,21 @@ class SellerApplicationController extends Controller
             'catatan_admin' => ['required', 'string', 'max:2000'],
         ]);
 
-        $application = DB::transaction(function () use (
-            $request,
-            $sellerApplication,
-            $validated
-        ) {
-            $application = SellerApplication::query()
-                ->lockForUpdate()
-                ->findOrFail($sellerApplication->id);
-
-            if ($application->status_pengajuan !== 'pending') {
-                abort(422, 'Pengajuan ini sudah ditinjau.');
-            }
-
-            $application->update([
-                'status_pengajuan' => 'rejected',
-                'catatan_admin' => $validated['catatan_admin'],
-                'reviewed_by' => $request->user()->id,
-                'reviewed_at' => now(),
-            ]);
-
-            return $application;
-        });
+        try {
+            $service->reject(
+                $sellerApplication,
+                $request->user()->id,
+                $validated['catatan_admin']
+            );
+        } catch (\RuntimeException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 422);
+        }
 
         return response()->json([
             'message' => 'Pengajuan toko ditolak.',
-            'data' => $application,
+            'data' => $sellerApplication->fresh(),
         ]);
     }
 

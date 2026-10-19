@@ -14,8 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Route web butuh login memakai halaman login admin (bukan route 'login' bawaan).
+        $middleware->redirectGuestsTo(fn () => route('admin.login'));
+
         $middleware->alias([
             'seller' => SellerMiddleware::class,
+            'admin' => \App\Http\Middleware\EnsureAdmin::class,
 
         ]);
     })

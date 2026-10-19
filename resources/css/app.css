@@ -2,8 +2,254 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../../resources/views/**/*.blade.php';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* ============================================================
+   Material Design 3 — Token Sistem Warna
+   Seed: #fee6a8 (kuning muda/amber)
+   Dihasilkan dengan @material/material-color-utilities
+   (lihat README.md bagian 7 — jangan ubah nilai secara manual
+   tanpa menghasilkan ulang palet dari seed)
+   ============================================================ */
+
+:root {
+  /* ===== M3 LIGHT — seed #fee6a8 ===== */
+  --md-sys-color-primary: #745b00;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #ffe08a;
+  --md-sys-color-on-primary-container: #241a00;
+  --md-sys-color-secondary: #695d3f;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #f1e1bb;
+  --md-sys-color-on-secondary-container: #221b04;
+  --md-sys-color-tertiary: #47664a;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #c8ecc9;
+  --md-sys-color-on-tertiary-container: #03210c;
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-on-error-container: #410002;
+  --md-sys-color-background: #fffbff;
+  --md-sys-color-on-background: #1e1b16;
+  --md-sys-color-surface: #fffbff;
+  --md-sys-color-on-surface: #1e1b16;
+  --md-sys-color-surface-variant: #ebe1cf;
+  --md-sys-color-on-surface-variant: #4c4639;
+  --md-sys-color-outline: #7d7667;
+  --md-sys-color-outline-variant: #cfc6b4;
+  --md-sys-color-inverse-surface: #33302a;
+  --md-sys-color-inverse-on-surface: #f7f0e7;
+  --md-sys-color-inverse-primary: #eac248;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-surface-dim: #dcd9de;
+  --md-sys-color-surface-bright: #fcf8fd;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f6f2f7;
+  --md-sys-color-surface-container: #f0edf1;
+  --md-sys-color-surface-container-high: #ebe7ec;
+  --md-sys-color-surface-container-highest: #e5e1e6;
+
+  /* Shape scale (M3) */
+  --md-shape-corner-small: 8px;
+  --md-shape-corner-medium: 12px;
+  --md-shape-corner-large: 16px;
+  --md-shape-corner-extra-large: 28px;
+  --md-shape-corner-full: 9999px;
+
+  /* Elevation (M3 level 1-3, disederhanakan) */
+  --md-elevation-1: 0 1px 2px 0 rgb(0 0 0 / 0.30), 0 1px 3px 1px rgb(0 0 0 / 0.15);
+  --md-elevation-2: 0 1px 2px 0 rgb(0 0 0 / 0.30), 0 2px 6px 2px rgb(0 0 0 / 0.15);
+  --md-elevation-3: 0 4px 8px 3px rgb(0 0 0 / 0.15), 0 1px 3px 0 rgb(0 0 0 / 0.30);
+
+  /* Motion */
+  --md-motion-short: 150ms;
+  --md-motion-medium: 250ms;
+  --md-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --md-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.dark {
+  /* ===== M3 DARK — seed #fee6a8 ===== */
+  --md-sys-color-primary: #eac248;
+  --md-sys-color-on-primary: #3d2f00;
+  --md-sys-color-primary-container: #574400;
+  --md-sys-color-on-primary-container: #ffe08a;
+  --md-sys-color-secondary: #d5c5a1;
+  --md-sys-color-on-secondary: #393015;
+  --md-sys-color-secondary-container: #50462a;
+  --md-sys-color-on-secondary-container: #f1e1bb;
+  --md-sys-color-tertiary: #adcfae;
+  --md-sys-color-on-tertiary: #19371f;
+  --md-sys-color-tertiary-container: #2f4d34;
+  --md-sys-color-on-tertiary-container: #c8ecc9;
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-on-error: #690005;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-on-error-container: #ffb4ab;
+  --md-sys-color-background: #1e1b16;
+  --md-sys-color-on-background: #e8e2d9;
+  --md-sys-color-surface: #1e1b16;
+  --md-sys-color-on-surface: #e8e2d9;
+  --md-sys-color-surface-variant: #4c4639;
+  --md-sys-color-on-surface-variant: #cfc6b4;
+  --md-sys-color-outline: #989080;
+  --md-sys-color-outline-variant: #4c4639;
+  --md-sys-color-inverse-surface: #e8e2d9;
+  --md-sys-color-inverse-on-surface: #33302a;
+  --md-sys-color-inverse-primary: #745b00;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-surface-dim: #16130e;
+  --md-sys-color-surface-bright: #3d3933;
+  --md-sys-color-surface-container-lowest: #100e09;
+  --md-sys-color-surface-container-low: #1e1b16;
+  --md-sys-color-surface-container: #221f1a;
+  --md-sys-color-surface-container-high: #2d2924;
+  --md-sys-color-surface-container-highest: #38342e;
+}
+
+/* Dark mode: lewat class .dark pada <html> (disimpan di localStorage) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   Mapping token M3 -> utility Tailwind v4
+   Dipakai: bg-primary, text-on-surface, border-outline, dll.
+   ============================================================ */
+@theme inline {
+  --color-primary: var(--md-sys-color-primary);
+  --color-on-primary: var(--md-sys-color-on-primary);
+  --color-primary-container: var(--md-sys-color-primary-container);
+  --color-on-primary-container: var(--md-sys-color-on-primary-container);
+  --color-secondary: var(--md-sys-color-secondary);
+  --color-on-secondary: var(--md-sys-color-on-secondary);
+  --color-secondary-container: var(--md-sys-color-secondary-container);
+  --color-on-secondary-container: var(--md-sys-color-on-secondary-container);
+  --color-tertiary: var(--md-sys-color-tertiary);
+  --color-on-tertiary: var(--md-sys-color-on-tertiary);
+  --color-tertiary-container: var(--md-sys-color-tertiary-container);
+  --color-on-tertiary-container: var(--md-sys-color-on-tertiary-container);
+  --color-error: var(--md-sys-color-error);
+  --color-on-error: var(--md-sys-color-on-error);
+  --color-error-container: var(--md-sys-color-error-container);
+  --color-on-error-container: var(--md-sys-color-on-error-container);
+  --color-background: var(--md-sys-color-background);
+  --color-on-background: var(--md-sys-color-on-background);
+  --color-surface: var(--md-sys-color-surface);
+  --color-on-surface: var(--md-sys-color-on-surface);
+  --color-surface-variant: var(--md-sys-color-surface-variant);
+  --color-on-surface-variant: var(--md-sys-color-on-surface-variant);
+  --color-outline: var(--md-sys-color-outline);
+  --color-outline-variant: var(--md-sys-color-outline-variant);
+  --color-inverse-surface: var(--md-sys-color-inverse-surface);
+  --color-inverse-on-surface: var(--md-sys-color-inverse-on-surface);
+  --color-inverse-primary: var(--md-sys-color-inverse-primary);
+  --color-surface-dim: var(--md-sys-color-surface-dim);
+  --color-surface-bright: var(--md-sys-color-surface-bright);
+  --color-surface-container-lowest: var(--md-sys-color-surface-container-lowest);
+  --color-surface-container-low: var(--md-sys-color-surface-container-low);
+  --color-surface-container: var(--md-sys-color-surface-container);
+  --color-surface-container-high: var(--md-sys-color-surface-container-high);
+  --color-surface-container-highest: var(--md-sys-color-surface-container-highest);
+
+  --radius-sm: var(--md-shape-corner-small);
+  --radius-md: var(--md-shape-corner-medium);
+  --radius-lg: var(--md-shape-corner-large);
+  --radius-xl: var(--md-shape-corner-extra-large);
+  --radius-full: var(--md-shape-corner-full);
+
+  --font-sans: 'Roboto', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --shadow-elev-1: var(--md-elevation-1);
+  --shadow-elev-2: var(--md-elevation-2);
+  --shadow-elev-3: var(--md-elevation-3);
+
+  --animate-motion-short: motion-short var(--md-motion-short) var(--md-motion-easing-standard);
+}
+
+@keyframes motion-short {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    background-color: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-background);
+    font-family: var(--font-sans);
+  }
+  :focus-visible {
+    outline: 3px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+    border-radius: var(--md-shape-corner-small);
+  }
+}
+
+/* Ikon Material Symbols */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-outlined.filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Komponen M3 kustom */
+.md-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.md-ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity var(--md-motion-short) var(--md-motion-easing-standard);
+}
+.md-ripple:hover::after { opacity: 0.08; }
+.md-ripple:active::after { opacity: 0.12; }
+
+/* Item navigasi: indicator bulat khas M3 */
+.md-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: var(--md-shape-corner-full);
+  color: var(--md-sys-color-on-surface-variant);
+  transition: background-color var(--md-motion-short) var(--md-motion-easing-standard),
+              color var(--md-motion-short) var(--md-motion-easing-standard);
+}
+.md-nav-item:hover {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+}
+.md-nav-item.active {
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  font-weight: 500;
 }

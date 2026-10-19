@@ -19,7 +19,8 @@ class ProductController extends Controller
                 'seller:id,name',
                 'images',
             ])
-            ->latest()
+            ->inRandomOrder()
+            ->take(10)
             ->get();
 
         return response()->json([
