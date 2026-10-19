@@ -26,6 +26,7 @@ class AccountController extends Controller
                 'email' => $user->email,
                 'status' => $user->status,
                 'role' => $user->role,
+                'roles' => $user->roleNames(),
             ],
             'primary_address' => $primaryAddress ? [
                 'id' => $primaryAddress->id,
@@ -61,6 +62,7 @@ class AccountController extends Controller
                 'email' => $user->email,
                 'status' => $user->status,
                 'role' => $user->role,
+                'roles' => $user->roleNames(),
             ],
         ]);
     }

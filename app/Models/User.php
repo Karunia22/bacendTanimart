@@ -86,4 +86,19 @@ class User extends Authenticatable
             ->where('name', $role)
             ->exists();
     }
+
+    /**
+     * Daftar nama role milik pengguna.
+     *
+     * Dipakai untuk mengirim array `roles` pada respons API
+     * tanpa bentrok dengan nama relasi `roles()`.
+     *
+     * @return array<int, string>
+     */
+    public function roleNames(): array
+    {
+        return $this->roles()
+            ->pluck('name')
+            ->all();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Komponen Blade anonim admin: <x-admin.button> dst.
+        // diambil dari resources/views/admin/components/*.blade.php
+        Blade::anonymousComponentPath(
+            resource_path('views/admin/components'),
+            'admin'
+        );
     }
 }

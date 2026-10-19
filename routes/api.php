@@ -10,13 +10,19 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProductImageController;
 use App\Http\Controllers\Api\SellerApplicationController;
 use App\Http\Controllers\Api\SellerOrderController;
+use App\Http\Controllers\Api\SellerSalesController;
+use App\Http\Controllers\Api\ShopController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        $user = $request->user();
+
+        return array_merge($user->toArray(), [
+            'roles' => $user->roleNames(),
+        ]);
     });
 
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -43,6 +49,20 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch(
             '/seller/orders/{orderId}/status',
             [SellerOrderController::class, 'updateStatus']
+        );
+        Route::get('/seller/shop', [ShopController::class, 'show']);
+        Route::patch('/seller/shop', [ShopController::class, 'update']);
+        Route::get(
+            '/seller/sales/summary',
+            [SellerSalesController::class, 'summary']
+        );
+        Route::get(
+            '/seller/sales/chart',
+            [SellerSalesController::class, 'chart']
+        );
+        Route::get(
+            '/seller/sales/report',
+            [SellerSalesController::class, 'report']
         );
     });
 

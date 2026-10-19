@@ -12,6 +12,14 @@ export default defineConfig({
                 bunny('Instrument Sans', {
                     weights: [400, 500, 600],
                 }),
+                // Font resmi Material Design 3
+                bunny('Roboto', {
+                    weights: [400, 500, 700],
+                }),
+                // Ikon M3 (ligature: <span class="material-symbols-outlined">home</span>)
+                bunny('Material Symbols Outlined', {
+                    weights: [400],
+                }),
             ],
         }),
         tailwindcss(),
